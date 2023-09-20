@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+
+  <body>
+    <div id="container"></div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/konva/9.0.0/konva.js"
+      integrity="sha512-FrKpQHTJaZYwr/6e2tNHb0EXjqITQD1Bl5/kb2yIXknPVhFTTPe+eSKp/QcFXps8+G3ROPqqxUGc7Is0miuoVg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      // 创建一个Konva舞台
+      var stage = new Konva.Stage({
+        container: "container",
+        width: 200,
+        height: 20,
+      });
+
+      // 创建一个Konva层
+      var layer = new Konva.Layer();
+
+      // 创建一个Konva矩形，作为颜色条的背景
+      var rect = new Konva.Rect({
+        x: 0,
+        y: 0,
+        width: stage.width(),
+        height: stage.height(),
+        fillLinearGradientStartPoint: { x: 0, y: 0 },
+        fillLinearGradientEndPoint: { x: stage.width(), y: 0 },
+        fillLinearGradientColorStops: [
+          0,
+          "#f00",
+          0.25,
+          "#ff0",
+          0.5,
+          "#0f0",
+          0.75,
+          "#0ff",
+          1,
+          "#00f",
+        ],
+      });
+
+      // 将矩形添加到层中
+      layer.add(rect);
+
+      // 将层添加到舞台中
+      stage.add(layer);
+    </script>
+  </body>
+</html>

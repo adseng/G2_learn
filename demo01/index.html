@@ -1,13 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0.1px solid #ccc;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+  <body>
+    <div id="canvasContainer"></div>
+    <div id="container"></div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/konva/9.0.0/konva.js"
+      integrity="sha512-FrKpQHTJaZYwr/6e2tNHb0EXjqITQD1Bl5/kb2yIXknPVhFTTPe+eSKp/QcFXps8+G3ROPqqxUGc7Is0miuoVg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
     <script>
-        
+      const randomHex = (value) =>
+        `#${Math.floor((value || Math.random()) * 0xffffff)
+          .toString(16)
+          .padEnd(6, "0")}`;
+
+      fetch("./output.json")
+        .then((res) => res.json())
+        .then((data) => {
+          groupedMatrixChart({ container: "container", width: 500, height: 500, data: data });
+        });
+
+      function groupedMatrixChart({ container, width, height, data }) {
+        const x = (v) => {
+          return v;
+        };
+        const y = (v) => height - v;
+
+        const stage = new Konva.Stage({
+          container,
+          width,
+          height,
+        });
+        const layer = new Konva.Layer();
+        stage.add(layer);
+        // 像素比
+
+        let r = 10;
+        /** @type {data} array */
+        for (const item of data) {
+          if (item.x % 10 === 0 || item.y % 10 === 0) {
+            continue;
+          }
+          let rect = new Konva.Rect({
+            x: item.x * r,
+            y: item.y * r,
+            width: r,
+            height: r,
+          }).fill(randomHex(item.color));
+          layer.add(rect);
+        }
+        const GAP = 50;
+
+        // 绘制坐标轴
+        const xAxis = new Konva.Line({
+          points: [x(GAP), y(GAP), x(width - GAP), y(GAP)],
+          stroke: "black",
+          strokeWidth: 1,
+        });
+        layer.add(xAxis);
+        const yAxis = new Konva.Line({
+          points: [x(GAP), y(GAP), x(GAP), y(height - GAP)],
+          stroke: "black",
+          strokeWidth: 1,
+        });
+        layer.add(yAxis);
+
+        // 绘制坐标轴标签
+        const xAxisLabel = new Konva.Text({
+          x: x(width - GAP),
+          y: y(GAP),
+          text: "x",
+          fontSize: 12,
+          fill: "black",
+        });
+        layer.add(xAxisLabel);
+        const yAxisLabel = new Konva.Text({
+          x: x(GAP),
+          y: y(height - GAP),
+          text: "y",
+          fontSize: 12,
+          fill: "black",
+        });
+        layer.add(yAxisLabel);
+
+        // 绘制坐标轴标签
+
+        // 绘制main区域
+      }
     </script>
-</body>
+  </body>
 </html>
