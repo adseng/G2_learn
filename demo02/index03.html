@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+
+  <body>
+    <div id="container"></div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/konva/9.0.0/konva.js"
+      integrity="sha512-FrKpQHTJaZYwr/6e2tNHb0EXjqITQD1Bl5/kb2yIXknPVhFTTPe+eSKp/QcFXps8+G3ROPqqxUGc7Is0miuoVg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      // 页面加载
+
+      fun();
+
+      function fun() {
+        // 创建一个新的Canvas元素
+        var canvas = Konva.Util.createCanvasElement();
+
+        // 设置Canvas的宽度和高度
+        canvas.width = 40;
+        canvas.height = 200;
+
+        // 创建一个Konva舞台
+        var stage = new Konva.Stage({
+          container: canvas,
+          width: canvas.width,
+          height: canvas.height,
+        });
+
+        // 创建一个Konva层，用于绘制颜色条
+        var colorLayer = new Konva.Layer();
+
+        // 创建一个Konva矩形，作为颜色条的背景
+        var colorRect = new Konva.Rect({
+          x: 0,
+          y: 0,
+          width: 20,
+          height: stage.height(),
+          fillLinearGradientStartPoint: { x: 0, y: 0 },
+          fillLinearGradientEndPoint: { x: 0, y: stage.height() },
+          fillLinearGradientColorStops: [
+            0,
+            "#f00",
+            0.25,
+            "#ff0",
+            0.5,
+            "#0f0",
+            0.75,
+            "#0ff",
+            1,
+            "#00f",
+          ],
+        });
+
+        // 将矩形添加到颜色层中
+        colorLayer.add(colorRect);
+
+        // 将颜色层添加到舞台中
+        stage.add(colorLayer);
+
+        // 将舞台转换为图像
+        stage.toImage({
+          callback: function (img) {
+            // 在回调函数中获取图像对象
+            document.body.appendChild(img);
+          },
+        });
+      }
+    </script>
+  </body>
+</html>

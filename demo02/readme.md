@@ -6,3 +6,9 @@ index01.html
 
 index02.html
 一个竖着的颜色条，右侧带刻度线
+
+index03.html
+内存画图，转图片输出
+
+index04.html
+修改坐标系，坐标原点
