@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/konva/9.0.0/konva.js"
+      integrity="sha512-FrKpQHTJaZYwr/6e2tNHb0EXjqITQD1Bl5/kb2yIXknPVhFTTPe+eSKp/QcFXps8+G3ROPqqxUGc7Is0miuoVg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <meta charset="utf-8" />
+    <title>Konva Line Blob Demo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      canvas {
+        display: block;
+        /* outline: 1px dashed #9f2222; */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="kanva"></div>
+    <script>
+      // 创建舞台
+      const stage = new Konva.Stage({
+        container: "kanva",
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+
+      // 创建图层
+      const layer = new Konva.Layer();
+      stage.add(layer);
+
+      fetch("./data07.json")
+        .then((res) => res.json())
+        .then((data) => {
+          for (const line of data.lines) {
+            const l = new Konva.Line({
+              points: [
+                line["si"].pos[0] * 40,
+                line["si"].pos[1] * 40,
+                line["di"].pos[0] * 40,
+                line["di"].pos[1] * 40,
+              ],
+              stroke: "green",
+              strokeWidth: 10,
+            });
+            const text = new Konva.Text({
+              text: line["index"],
+              x: ((line["si"].pos[0] + line["di"].pos[0]) / 2) * 40,
+              y: ((line["si"].pos[1] + line["di"].pos[1]) / 2) * 40,
+            });
+            text.position({ x: text.x() - text.width() / 2, y: text.y() - text.height() / 2 });
+
+            layer.add(l);
+            layer.add(text);
+          }
+          for (const sp of data.sPoints) {
+            const c = new Konva.Circle({
+              radius: 20,
+              x: sp.pos[0] * 40,
+              y: sp.pos[1] * 40,
+              fill: "red",
+            });
+            const text = new Konva.Text({
+              text: sp.test,
+              x: sp.pos[0] * 40,
+              y: sp.pos[1] * 40,
+            });
+            text.position({ x: text.x() - text.width() / 2, y: text.y() - text.height() / 2 });
+            layer.add(c);
+            layer.add(text);
+          }
+          for (const dp of data.dPoints) {
+            const c = new Konva.Circle({
+              radius: 20,
+              x: dp.pos[0] * 40,
+              y: dp.pos[1] * 40,
+              fill: "blue",
+            });
+            const text = new Konva.Text({
+              text: dp.test,
+              x: dp.pos[0] * 40,
+              y: dp.pos[1] * 40,
+            });
+            text.position({ x: text.x() - text.width() / 2, y: text.y() - text.height() / 2 });
+            layer.add(c);
+            layer.add(text);
+          }
+        });
+    </script>
+  </body>
+</html>

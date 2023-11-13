@@ -16,5 +16,11 @@ index04.html
 index05.html
 小提琴
 
-index07.html
-fast KDE
+index06
+使用konva开发游戏，现在要求实现手电筒效果，效果描述：精灵可以移动，精灵周围100米范围内为可视区域，其他区域暂时处于不可见状态，周围的环境复杂，等待精灵去探索
+原型切割ctx.arc(pos.x, pos.y, 100, 0, Math.PI * 2, false)
+
+index07
+通道图
+
+

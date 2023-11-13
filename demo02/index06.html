@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/konva/9.0.0/konva.js"
+            integrity="sha512-FrKpQHTJaZYwr/6e2tNHb0EXjqITQD1Bl5/kb2yIXknPVhFTTPe+eSKp/QcFXps8+G3ROPqqxUGc7Is0miuoVg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
+    <meta charset="utf-8" />
+    <title>Konva Line Blob Demo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      canvas {
+        display: block;
+        /* outline: 1px dashed #9f2222; */
+      }
+    </style>
+  </head>
+  <body>
+  <video src="./4.mp4" autoplay loop muted style="visibility: hidden; position:fixed;width: 100%; height:100%; object-fit: cover;"></video>
+  <div id="kanva"></div>
+    <script>
+      window.onload = () => {
+        // 创建舞台
+        const stage = new Konva.Stage({
+          container: 'kanva',
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
+
+        // 创建图层
+        const layer = new Konva.Layer();
+        stage.add(layer);
+        layer.visible(false)
+
+        // group
+        const group = new Konva.Group({
+
+        });
+        layer.add(group)
+
+
+
+        const imageBg = new Image();
+        imageBg.src = './1.jpg'
+
+
+        const video = document.querySelector('video')
+        // 创建背景图片
+        const backgroundImage = new Konva.Image({
+          image: video,
+          width: layer.width(),
+          height: layer.height(),
+        });
+        // update Konva.Image size when meta is loaded
+        // video.addEventListener('loadedmetadata', function (e) {
+        //   backgroundImage.width(video.videoWidth);
+        //   backgroundImage.height(video.videoHeight);
+        // });
+
+        group.add(backgroundImage);
+        // createFood(group)
+
+        const imageSprite = new Image();
+        imageSprite.src = './2.jpg'
+
+        // 创建精灵
+        const sprite = new Konva.Image({
+          image: imageSprite,
+          x: stage.width() / 2,
+          y: stage.height() / 2,
+          offsetX: imageSprite.width / 2,
+          offsetY: imageSprite.height / 2
+        });
+        group.add(sprite);
+
+
+        layer.visible(true)
+        // 监听精灵的移动事件
+        // stage.on('mousemove', (e) => {
+        //   layer.visible(true)
+        //   const pos = stage.getPointerPosition();
+        //   group.clipFunc(function(ctx) {
+        //     ctx.arc(pos.x, pos.y, 100, 0, Math.PI * 2, false)
+        //   })
+        //   sprite.position(pos)
+        // });
+        const anim = new Konva.Animation(function () {
+          // do nothing, animation just need to update the layer
+        }, layer);
+        anim.start()
+
+
+        function createFood(group) {
+          for (let i = 0; i < 200; i++) {
+            const ci = new Konva.Circle({
+              radius: 20,
+              x: layer.width() * Math.random(),
+              y: layer.height() * Math.random(),
+              fill: Konva.Util.getRandomColor()
+            })
+            group.add(ci)
+          }
+
+        }
+      }
+
+
+    </script>
+  </body>
+</html>
