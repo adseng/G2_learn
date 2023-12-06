@@ -23,13 +23,13 @@ index06
 index07
 通道图
 
-index08
-canvas渐变的colorbar
-
 index0801
 div + css canvas渐变的colorbar
 
 index0802
 svg canvas渐变的colorbar
+
+index0803
+canvas渐变的colorbar
 
 
